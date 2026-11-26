@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Categories</title>
+  </head>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{% url 'home' %}"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Dropdown
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link disabled"
+                href="#"
+                tabindex="-1"
+                aria-disabled="true"
+                >Disabled</a
+              >
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="row">
+      <!--  list-->
+      <div class="col-3 mt-4 text-center">
+        <ul class="list-group">
+          <li class="list-group-item active" aria-current="true">Category</li>
+          {% for item in categories %}
+          <li class="list-group-item">
+            <a href="{% url 'categories' item.pk%}">{{item.title}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <!--  go somewhere-->
+      <div class="col-9 mt-4">
+                {% for item in news %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        {{ item.category }}
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+
+                                <h5 class="card-title">{{ item.title }}</h5>
+                                <p class="card-text">{{ item.context | safe | linebreaks | truncatewords:20 }}</p>
+
+                                {% if item.file %}
+                                <img class="mb-4" src="{{ item.file.url }}" width="640" height="360" controls>
+                                </img>
+                                {% else %}
+                                    <img class="mb-4" src="http://picsum.photos/200" alt="" width="640" height="360">
+                                {% endif %}
+                            <a href="{% url 'new_about' item.pk %}" class="btn btn-primary">Batafsil...</a>
+                                <a href="{% url 'delete_news' item.id %}" class="btn btn-danger">O'chirish...</a>
+                            </div>
+
+                    </div>
+                    <div class="card-footer text-muted">
+                        {{ item.created_ed | date:'Y-m-d' }}
+                    </div>
+                </div>
+                {% endfor %}
+
+
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+.venv/
+venv/
+.idea/
+__pycache__/
+*.py[cod]
+/media/
+/photos/
+.env
+db.sqlite3
+.DS_Store
